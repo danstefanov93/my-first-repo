@@ -5,4 +5,4 @@ window.$ = window.jQuery = $;
 
 import './ziggy';
 import './mainjs';
-// import 'alpinejs';
+import 'alpinejs';
