@@ -7,7 +7,7 @@ return [
         'width' => 120,
         'height' => 42,
         'quality' => 90,
-        'math' => false,
+        'math' => true,
         'expire' => 60,
         'encrypt' => false,
     ],

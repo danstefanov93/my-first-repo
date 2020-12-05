@@ -1,8 +1,8 @@
-require('./bootstrap');
+import './bootstrap';
 
 import $ from 'jquery';
 window.$ = window.jQuery = $;
 
-require('alpinejs');
-require('./ziggy');
-require('./mainjs');
+import './ziggy';
+import './mainjs';
+// import 'alpinejs';

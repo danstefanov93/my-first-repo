@@ -9,6 +9,10 @@ use App\Actions\Jetstream\DeleteUser;
 use App\Actions\Jetstream\UpdateTeamName;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
+use Laravel\Fortify\Fortify;
+use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -30,7 +34,23 @@ class JetstreamServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configurePermissions();
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = User::where('email', $request->email)->first();
+            $validate = [
+                'email' => 'required|email',
+                'password' => 'required',
+            ];
 
+            if(App::environment('production')) {
+                $validate['g-recaptcha-response'] = 'required|captcha';
+            
+            }
+            $request->validate($validate);
+            if ($user &&
+                Hash::check($request->password, $user->password)) {
+                return $user;
+            }
+        });
         Jetstream::createTeamsUsing(CreateTeam::class);
         Jetstream::updateTeamNamesUsing(UpdateTeamName::class);
         Jetstream::addTeamMembersUsing(AddTeamMember::class);
@@ -60,4 +80,5 @@ class JetstreamServiceProvider extends ServiceProvider
             'update',
         ])->description(__('Editor users have the ability to read, create, and update.'));
     }
+
 }

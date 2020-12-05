@@ -24,18 +24,13 @@
                 <x-jet-label for="password" value="{{ __('Password') }}" />
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
+            @if(app()->environment('production'))
             <div class="block mt-4 mb-4">
                 <div class="captcha inline-flex">
-                    <span>{!! captcha_img() !!}</span>
-                        <x-jet-button id="reload" class="reload ml-2" type="button">
-                            <x:heroicon-o-refresh class="w-6 h-6 text-white-500" />
-                        </x-jet-button>
-                    </button>
+                    {!! NoCaptcha::display() !!}
                 </div>
             </div>
-            <div class="block mt-4">
-                <x-jet-input id="captcha" type="text" class="block w-full" placeholder="Enter Captcha" name="captcha" />
-            </div>
+            @endif
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
                     <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
@@ -57,3 +52,6 @@
         </form>
     </x-jet-authentication-card>
 </x-guest-layout>
+@if(app()->environment('production'))
+    {!! NoCaptcha::renderJs() !!}
+@endif
