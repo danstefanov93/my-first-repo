@@ -35,7 +35,6 @@
                 {{ $slot }}
             </main>
         </div>
-        @routes
         @stack('modals')
 
         @livewireScripts

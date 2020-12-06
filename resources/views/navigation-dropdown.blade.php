@@ -5,9 +5,10 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
+                    <a class="flex items-center" href="{{ route('dashboard') }}">
+                        <x-jet-application-mark class="block h-12 w-auto" />
                     </a>
+                    <h2 class="ml-2 text-sm leading-5">{{config('app.slogan')}}</h2>
                 </div>
 
                 <!-- Navigation Links -->
